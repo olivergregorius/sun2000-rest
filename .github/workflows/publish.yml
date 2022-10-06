@@ -31,6 +31,8 @@ jobs:
           # IMAGE_TAG=`echo $GITHUB_REF | sed 's#.*/v##'`
           IMAGE_TAG=testing
           echo "Setting Docker image tag to ${IMAGE_TAG}"
+        env:
+          IMAGE_TAG: ${IMAGE_TAG}
 
       - name: Build and Push
         uses: docker/build-push-action@v3
