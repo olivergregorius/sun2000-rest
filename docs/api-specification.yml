@@ -1,0 +1,326 @@
+openapi: 3.0.3
+info:
+  title: Sun2000 REST
+  description: A REST interface for accessing Sun2000 metrics
+  version: 1.0.0
+security:
+  - ApiKeyAuth: [ ]
+paths:
+  /registers:
+    get:
+      summary: Return all available registers for the given equipment
+      description: Return all available registers for the given equipment
+      tags:
+        - Registers
+      parameters:
+        - name: equipment
+          in: query
+          description: Equipment to retrieve all available registers for
+          required: true
+          schema:
+            type: string
+            enum:
+              - inverter
+              - battery
+              - meter
+      responses:
+        200:
+          $ref: '#/components/responses/RegistersResponse'
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                No Equipment Error:
+                  $ref: '#/components/examples/NoEquipmentError'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Unauthorized:
+                  $ref: '#/components/examples/UnauthorizedError'
+  /register-values:
+    post:
+      summary: Return values and meta-information about requested registers
+      description: Return values and meta-information about requested registers
+      tags:
+        - Registers
+      requestBody:
+        $ref: '#/components/requestBodies/RegistersValueRequest'
+      responses:
+        200:
+          $ref: '#/components/responses/RegistersValueResponse'
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Invalid Register Error:
+                  $ref: '#/components/examples/InvalidRegisterError'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Unauthorized:
+                  $ref: '#/components/examples/UnauthorizedError'
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-Api-Key
+  requestBodies:
+    RegistersValueRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - equipment
+              - registers
+            properties:
+              equipment:
+                type: string
+                enum:
+                  - inverter
+                  - battery
+                  - meter
+              registers:
+                type: array
+                items:
+                  type: string
+          examples:
+            Inverter Equipment Registers:
+              $ref: '#/components/examples/InverterEquipmentRegistersValueRequest'
+            Battery Equipment Registers:
+              $ref: '#/components/examples/BatteryEquipmentRegistersValueRequest'
+            Meter Equipment Registers:
+              $ref: '#/components/examples/MeterEquipmentRegistersValueRequest'
+  responses:
+    RegistersResponse:
+      description: Successful Response
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - equipment
+              - registers
+            properties:
+              equipment:
+                type: string
+                enum:
+                  - inverter
+                  - battery
+                  - meter
+              registers:
+                type: array
+                items:
+                  type: string
+          examples:
+            Inverter Equipment Registers:
+              $ref: '#/components/examples/InverterEquipmentRegistersResponse'
+            Battery Equipment Registers:
+              $ref: '#/components/examples/BatteryEquipmentRegistersResponse'
+            Meter Equipment Registers:
+              $ref: '#/components/examples/MeterEquipmentRegistersResponse'
+    RegistersValueResponse:
+      description: Successful Response
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - equipment
+              - registers
+            properties:
+              equipment:
+                type: string
+                enum:
+                  - inverter
+                  - battery
+                  - meter
+              registers:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - name
+                    - value
+                    - type
+                  properties:
+                    name:
+                      type: string
+                    value:
+                      type: string
+                      description: Raw value read from register
+                    mappedValue:
+                      type: string
+                      description: Mapped value in case value has an enum representation
+                    type:
+                      type: string
+                      enum:
+                        - number
+                        - string
+                    gain:
+                      type: number
+                    unit:
+                      type: string
+          examples:
+            Inverter Equipment Registers:
+              $ref: '#/components/examples/InverterEquipmentRegistersValueResponse'
+            Battery Equipment Registers:
+              $ref: '#/components/examples/BatteryEquipmentRegistersValueResponse'
+            Meter Equipment Registers:
+              $ref: '#/components/examples/MeterEquipmentRegistersValueResponse'
+  schemas:
+    Error:
+      description: Error
+      required:
+        - message
+      properties:
+        message:
+          type: string
+  examples:
+    InverterEquipmentRegistersResponse:
+      description: Inverter Equipment Registers
+      value:
+        equipment: inverter
+        registers:
+          - SN
+          - PN
+          - ModelID
+          - NumberOfPVStrings
+          - NumberOfMPPTrackers
+          - RatedPower
+    BatteryEquipmentRegistersResponse:
+      description: Battery Equipment Registers
+      value:
+        equipment: battery
+        registers:
+          - RunningStatus
+          - WorkingModeSettings
+          - BusVoltage
+          - BusCurrent
+          - ChargeDischargePower
+          - MaximumChargePower
+    MeterEquipmentRegistersResponse:
+      description: Meter Equipment Registers
+      value:
+        equipment: meter
+        registers:
+          - MeterStatus
+          - APhaseVoltage
+          - BPhaseVoltage
+          - CPhaseVoltage
+          - APhaseCurrent
+          - BPhaseCurrent
+    InverterEquipmentRegistersValueRequest:
+      description: Inverter Equipment Registers
+      value:
+        equipment: inverter
+        registers:
+          - NumberOfPVStrings
+          - NumberOfMPPTrackers
+          - RatedPower
+    BatteryEquipmentRegistersValueRequest:
+      description: Battery Equipment Registers
+      value:
+        equipment: battery
+        registers:
+          - RunningStatus
+          - BusVoltage
+          - BusCurrent
+    MeterEquipmentRegistersValueRequest:
+      description: Meter Equipment Registers
+      value:
+        equipment: meter
+        registers:
+          - MeterStatus
+          - APhaseVoltage
+          - BPhaseVoltage
+    InverterEquipmentRegistersValueResponse:
+      description: Inverter Equipment Registers
+      value:
+        equipment: inverter
+        registers:
+          - name: NumberOfPVStrings
+            value: "2"
+            type: number
+            gain: 1
+          - name: NumberOfMPPTrackers
+            value: "2"
+            type: number
+            gain: 1
+          - name: RatedPower
+            value: "11000"
+            type: number
+            gain: 1000
+            unit: kW
+    BatteryEquipmentRegistersValueResponse:
+      description: Battery Equipment Registers
+      value:
+        equipment: battery
+        registers:
+          - name: RunningStatus
+            value: "2"
+            mappedValue: running
+            type: number
+            gain: 1
+          - name: BusVoltage
+            value: "7839"
+            type: number
+            gain: 10
+            unit: V
+          - name: BusCurrent
+            value: "0"
+            type: number
+            gain: 10
+            unit: A
+    MeterEquipmentRegistersValueResponse:
+      description: Meter Equipment Registers
+      value:
+        equipment: meter
+        registers:
+          - name: MeterStatus
+            value: "1"
+            mappedValue: online
+            type: number
+            gain: 1
+          - name: APhaseVoltage
+            value: "2351"
+            type: number
+            gain: 10
+            unit: V
+          - name: BPhaseVoltage
+            value: "2351"
+            type: number
+            gain: 10
+            unit: V
+    NoEquipmentError:
+      description: No value for equipment given
+      value:
+        message: No value for equipment
+    InvalidEquipmentError:
+      description: Invalid value for equipment given
+      value:
+        message: Invalid value for equipment
+    InvalidRegisterError:
+      description: Invalid register name given
+      value:
+        message: At least one invalid register passed
+    UnauthorizedError:
+      description: Unauthorized access
+      value:
+        message: No or invalid API-key provided
