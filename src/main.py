@@ -17,7 +17,6 @@ log_level = os.getenv('LOG_LEVEL', 'INFO')
 logger = logging.getLogger('sun2000-rest')
 logger.setLevel(level=log_level)
 app = Flask(__name__)
-inverter = inverter.Sun2000(host=inverter_host, port=inverter_port)
 
 
 class Equipment(Enum):
@@ -170,4 +169,8 @@ validate_settings()
 logger.info('Initializing REST interface for Sun2000 inverter')
 logger.info(f'Inverter will be contacted on: host = {inverter_host}, port = {inverter_port}')
 logger.info(f'Log level set to {log_level}')
+inverter = inverter.Sun2000(host=inverter_host, port=inverter_port)
+inverter.connect()
+if not inverter.connected:
+    exit('Connection to inverter could not be established')
 logger.info('Ready to accept requests')
