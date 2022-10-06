@@ -29,14 +29,14 @@ jobs:
       - name: Set release version
         run: |
           # IMAGE_TAG=`echo $GITHUB_REF | sed 's#.*/v##'`
-          IMAGE_TAG=testing1
+          IMAGE_TAG=testing
           echo "Setting Docker image tag to ${IMAGE_TAG}"
-#
-#      - name: Build and Push
-#        uses: docker/build-push-action@v3
-#        with:
-#          context: .
-#          file: deployment/docker/Dockerfile
-#          platforms: linux/amd64,linux/arm64
-#          push: false
-#          tags: olivergregorius/sun2000-rest:${IMAGE_TAG}
+
+      - name: Build and Push
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          file: deployment/docker/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: false
+          tags: olivergregorius/sun2000-rest:${IMAGE_TAG}
