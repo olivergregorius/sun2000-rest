@@ -26,7 +26,7 @@ jobs:
       - name: Set release version
         run: |
 #          IMAGE_TAG=`echo $GITHUB_REF | sed 's#.*/v##'`
-          IMAGE_TAG=testing
+          IMAGE_TAG=testing1
           echo "Setting Docker image tag to ${IMAGE_TAG}"
 
       - name: Build and Push
