@@ -42,5 +42,5 @@ jobs:
           context: .
           file: ./deployment/docker/Dockerfile
           platforms: linux/amd64,linux/arm64
-          push: false
+          push: true
           tags: olivergregorius/sun2000-rest:${{ env.IMAGE_TAG }}
