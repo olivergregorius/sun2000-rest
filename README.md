@@ -2,7 +2,7 @@
 
 [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/olivergregorius/sun2000-rest/Publish?label=Publish&logo=github)](https://github.com/olivergregorius/sun2000-rest/actions/workflows/publish.yml)
 [![GitHub](https://img.shields.io/github/license/olivergregorius/sun2000-rest?label=License)](https://github.com/olivergregorius/sun2000-rest/blob/HEAD/LICENSE)
-[![Docker](https://img.shields.io/docker/v/olivergregorius/sun2000-rest?label=Tag&logo=docker&sort=semver)](https://hub.docker.com/r/olivergregorius/run2000-rest)
+[![Docker](https://img.shields.io/docker/v/olivergregorius/sun2000-rest?label=Tag&logo=docker&sort=semver)](https://hub.docker.com/r/olivergregorius/sun2000-rest)
 
 ## Introduction
 
