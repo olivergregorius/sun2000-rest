@@ -35,7 +35,7 @@ jobs:
           IMAGE_TAG=testing
           echo "Setting Docker image tag to ${IMAGE_TAG}"
           echo "IMAGE_TAG=${IMAGE_TAG}" >> $GITHUB_ENV
-          sed -i "s/<latest_tag_placeholder>/${IMAGE_TAG}" ./deployment/docker/README.md
+          sed -i "s/<latest_tag_placeholder>/${IMAGE_TAG}/" ./deployment/docker/README.md
 
       - name: Build and Push
         uses: docker/build-push-action@v3
