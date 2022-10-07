@@ -6,6 +6,11 @@ RESTful interface for reading Huawei Sun2000 inverter metrics.
 
 - <latest_tag_placeholder>, latest
 
+## Supported platforms
+
+- amd64
+- arm64
+
 ## How to use this image
 
 ### Basic configuration

@@ -16,7 +16,9 @@ The inverter must be accessible through its internal Wifi access point providing
 
 A possible scenario would be to use a Raspberry Pi connecting its Wifi to the internal Sun2000 Wifi access point, connecting the Ethernet-port to the local LAN
 and starting the application. The REST-API should then be accessible on the local LAN IP.
-Furthermore, a [Docker image](https://hub.docker.com/r/olivergregorius/run2000-rest) is provided, including all required libraries, to simplify the setup.
+
+Furthermore, a [Docker image](https://hub.docker.com/r/olivergregorius/run2000-rest) is provided for platforms `amd64` and `arm64`, including all required
+libraries, to simplify the setup.
 
 ## Usage
 
