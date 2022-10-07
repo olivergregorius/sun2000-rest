@@ -44,7 +44,7 @@ jobs:
           file: ./deployment/docker/Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: olivergregorius/sun2000-rest:${{ env.IMAGE_TAG }}
+          tags: olivergregorius/sun2000-rest:${{ env.IMAGE_TAG }},olivergregorius/sun2000-rest:latest
 
       - name: Update repo description
         uses: peter-evans/dockerhub-description@v2
