@@ -27,7 +27,7 @@ Given the scenario using a Raspberry Pi as described above:
 1. Checkout the repository to a location of your choice
 2. Install requirements via pip: `pip install -r requirements.txt`
 3. Set the following environment variables:
-   ```bash
+   ```shell
    export FLASK_APP=./src/main.py
    export INVERTER_HOST=<inverter IP address, usually 192.168.200.1>
    export INVERTER_PORT=<inverter Modbus TCP port, usually 502, or 6607 on newer firmwares>
