@@ -9,7 +9,7 @@ from sun2000_modbus import inverter
 from sun2000_modbus.datatypes import DataType
 from sun2000_modbus.registers import InverterEquipmentRegister, BatteryEquipmentRegister, MeterEquipmentRegister
 
-inverter_host = None
+inverter_host = '192.168.200.1'
 inverter_port = 6607
 accepted_api_keys = []
 log_level = os.getenv('LOG_LEVEL', 'INFO')
@@ -33,8 +33,6 @@ def validate_settings():
     # INVERTER_HOST
     if os.getenv('INVERTER_HOST'):
         inverter_host = os.getenv('INVERTER_HOST')
-    else:
-        exit('Error: Required environment variable INVERTER_HOST not set')
 
     # INVERTER_PORT
     if os.getenv('INVERTER_PORT'):
