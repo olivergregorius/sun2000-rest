@@ -52,5 +52,5 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
           repository: olivergregorius/sun2000-rest
-          short-description: RESTful interface for reading Huawei Sun2000 inverter metrics
+          short-description: RESTful interface for reading Huawei Sun2000 inverter metrics.
           readme-filepath: ./deployment/docker/README.md
