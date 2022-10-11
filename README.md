@@ -7,7 +7,8 @@
 ## Introduction
 
 sun2000-rest provides a RESTful interface for accessing the Sun2000 inverter metrics. This project uses the
-[sun2000_modbus](https://github.com/olivergregorius/sun2000_modbus)-library to connect to the Sun2000 inverter.
+[sun2000_modbus](https://github.com/olivergregorius/sun2000_modbus)-library to connect to the Sun2000 inverter. Currently only read-access to the registers is
+implemented.
 
 ## Requirements
 

@@ -1,0 +1,23 @@
+import os
+
+from application.constants import ENV_INVERTER_HOST, ENV_INVERTER_PORT, ENV_ACCEPTED_API_KEYS, ENV_LOG_LEVEL
+
+# INVERTER_HOST
+INVERTER_HOST = '192.168.200.1'
+if os.getenv(ENV_INVERTER_HOST):
+    INVERTER_HOST = os.getenv(ENV_INVERTER_HOST)
+
+# INVERTER_PORT
+INVERTER_PORT = 6607
+if os.getenv(ENV_INVERTER_PORT):
+    INVERTER_PORT = os.getenv(ENV_INVERTER_PORT)
+
+# ACCEPTED_API_KEYS
+ACCEPTED_API_KEYS = []
+if os.getenv(ENV_ACCEPTED_API_KEYS):
+    ACCEPTED_API_KEYS = os.getenv(ENV_ACCEPTED_API_KEYS).split(',')
+else:
+    exit(f'Error: Required environment variable {ENV_ACCEPTED_API_KEYS} not set')
+
+# LOG_LEVEL
+LOG_LEVEL = os.getenv(ENV_LOG_LEVEL, 'INFO')
