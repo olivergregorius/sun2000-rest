@@ -37,7 +37,7 @@ Given the scenario using a Raspberry Pi as described above:
    export ACCEPTED_API_KEYS=[comma separated list of one or more API keys for authorization]
    ```
    Note that the inverter's IP address is the one from the subnet provided by the inverter's Wifi access point. Usually that is 192.168.200.1.
-4. Start the application: `flask run`, the API should now be accessible on `http://<LAN IP>:5000`.
+4. Start the application: `flask run`, the API should now be accessible on `http://[LAN IP]:5000`.
 
 ### Docker Container
 
@@ -54,7 +54,7 @@ docker run -d --name sun2000-rest \
 olivergregorius/sun2000-rest:[latest image tag]
 ```
 
-The API should now be accessible on `http://<LAN IP>:5000`.
+The API should now be accessible on `http://[LAN IP]:5000`.
 
 ### Configuration Options
 
