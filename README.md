@@ -32,9 +32,9 @@ Given the scenario using a Raspberry Pi as described above:
 3. Set the following environment variables:
    ```shell
    export FLASK_APP=wsgi.py
-   export INVERTER_HOST=<inverter IP address, usually 192.168.200.1>
-   export INVERTER_PORT=<inverter Modbus TCP port, usually 502, or 6607 on newer firmwares>
-   export ACCEPTED_API_KEYS=<comma separated list of one or more API keys for authorization>
+   export INVERTER_HOST=[inverter IP address, usually 192.168.200.1]
+   export INVERTER_PORT=[inverter Modbus TCP port, usually 502, or 6607 on newer firmwares]
+   export ACCEPTED_API_KEYS=[comma separated list of one or more API keys for authorization]
    ```
    Note that the inverter's IP address is the one from the subnet provided by the inverter's Wifi access point. Usually that is 192.168.200.1.
 4. Start the application: `flask run`, the API should now be accessible on `http://<LAN IP>:5000`.
@@ -45,13 +45,13 @@ Given the scenario using a Raspberry Pi as described above:
 
 Run the Docker container with:
 
-```
+```shell
 docker run -d --name sun2000-rest \
 -p 5000:5000 \
--e INVERTER_HOST=<inverter IP address, usually 192.168.200.1> \
--e INVERTER_PORT=<inverter Modbus TCP port, usually 502, or 6607 on newer firmwares> \
--e ACCEPTED_API_KEYS=<comma separated list of one or more API keys for authorization> \
-olivergregorius/sun2000-rest:<latest image tag>
+-e INVERTER_HOST=[inverter IP address, usually 192.168.200.1] \
+-e INVERTER_PORT=[inverter Modbus TCP port, usually 502, or 6607 on newer firmwares] \
+-e ACCEPTED_API_KEYS=[comma separated list of one or more API keys for authorization] \
+olivergregorius/sun2000-rest:[latest image tag]
 ```
 
 The API should now be accessible on `http://<LAN IP>:5000`.
