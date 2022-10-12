@@ -260,3 +260,21 @@ class MainTest(unittest.TestCase):
 
         self.assertEqual(200, response.status_code)
         self.assertEqual(expected_response_json, response.get_json())
+
+
+class ConnectionFailTest(unittest.TestCase):
+
+    @patch(
+        'sun2000_modbus.inverter.Sun2000.connect', sun2000mock.connect_fail
+    )
+    def test_connection_to_inverter_fails_application_exits(self) -> None:
+        test_config = {
+            'INVERTER_HOST': '192.168.200.1',
+            'INVERTER_PORT': 6607,
+            'ACCEPTED_API_KEYS': '12345,98765',
+            'LOG_LEVEL': 'DEBUG'
+        }
+        with self.assertRaises(SystemExit) as e:
+            create_app(test_config)
+
+        self.assertEqual('Connection to inverter could not be established', e.exception.code)

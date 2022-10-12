@@ -5,6 +5,10 @@ def connect_success(self):
     self.connected = True
 
 
+def connect_fail(self):
+    self.connected = False
+
+
 MockedRawResponses = {
     InverterEquipmentRegister.Model: 'SUN2000',
     InverterEquipmentRegister.RatedPower: 10000,
