@@ -52,7 +52,6 @@ class MainTest(unittest.TestCase):
         self.assertEqual(400, response.status_code)
         self.assertEqual({'message': 'No value for equipment'}, response.get_json())
 
-
         # Passing an invalid equipment value
         response = self.client.get('/registers', query_string={'equipment': 'invalid_equipment'}, headers={'x-api-key': '12345'})
 
@@ -123,8 +122,8 @@ class MainTest(unittest.TestCase):
         self.assertEqual({'message': 'No value for equipment'}, response.get_json())
 
         # Passing an invalid equipment value
-        response = self.client.post('/register-values', data=json.dumps({'equipment': 'invalid_equipment', 'registers': registers}), content_type='application/json',
-                                    headers={'x-api-key': '12345'})
+        response = self.client.post('/register-values', data=json.dumps({'equipment': 'invalid_equipment', 'registers': registers}),
+                                    content_type='application/json', headers={'x-api-key': '12345'})
 
         self.assertEqual(400, response.status_code)
         self.assertEqual({'message': 'Invalid value for equipment'}, response.get_json())

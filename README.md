@@ -31,7 +31,7 @@ Given the scenario using a Raspberry Pi as described above:
 2. Install requirements via pip: `pip install -r requirements.txt`
 3. Set the following environment variables:
    ```shell
-   export FLASK_APP=./src/main.py
+   export FLASK_APP=wsgi.py
    export INVERTER_HOST=<inverter IP address, usually 192.168.200.1>
    export INVERTER_PORT=<inverter Modbus TCP port, usually 502, or 6607 on newer firmwares>
    export ACCEPTED_API_KEYS=<comma separated list of one or more API keys for authorization>
@@ -46,7 +46,8 @@ Given the scenario using a Raspberry Pi as described above:
 Run the Docker container with:
 
 ```
-docker run -d --name sun2000-rest --network host \
+docker run -d --name sun2000-rest \
+-p 5000:5000 \
 -e INVERTER_HOST=<inverter IP address, usually 192.168.200.1> \
 -e INVERTER_PORT=<inverter Modbus TCP port, usually 502, or 6607 on newer firmwares> \
 -e ACCEPTED_API_KEYS=<comma separated list of one or more API keys for authorization> \
@@ -59,12 +60,13 @@ The API should now be accessible on `http://<LAN IP>:5000`.
 
 The application can be configured setting the following environment variables:
 
-| Environment Variable | Description                                                       | Example       | Default Value |
-|----------------------|-------------------------------------------------------------------|---------------|---------------|
-| INVERTER_HOST        | Inverter IP address, usually 192.168.200.1                        | 192.168.200.1 | 192.168.200.1 |
-| INVERTER_PORT        | Inverter Modbus TCP port, usually 502, or 6607 on newer firmwares | 6607          | 6607          |
-| ACCEPTED_API_KEYS    | Comma separated list of one or more API keys for authorization    | secretApiKey  |               |
-| LOG_LEVEL            | Log level                                                         | DEBUG         | INFO          |
+| Environment Variable | Description                                                       | Example                          | Default Value |
+|----------------------|-------------------------------------------------------------------|----------------------------------|---------------|
+| INVERTER_HOST        | Inverter IP address, usually 192.168.200.1                        | 192.168.200.1                    | 192.168.200.1 |
+| INVERTER_PORT        | Inverter Modbus TCP port, usually 502, or 6607 on newer firmwares | 6607                             | 6607          |
+| ACCEPTED_API_KEYS    | Comma separated list of one or more API keys for authorization    | secretApiKey,anotherSecretApiKey |               |
+| LOG_LEVEL            | Log level                                                         | DEBUG                            | INFO          |
+| UWSGI_WORKERS        | Set amount of workers/processes (Docker only)                     | 5                                | 5             |
 
 ## Provided Endpoints/Resources
 

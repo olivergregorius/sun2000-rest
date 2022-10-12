@@ -25,12 +25,13 @@ olivergregorius/sun2000-rest:latest
 
 The application can be configured setting the following environment variables:
 
-| Environment Variable | Description                                                       | Example       | Default Value |
-|----------------------|-------------------------------------------------------------------|---------------|---------------|
-| INVERTER_HOST        | Inverter IP address, usually 192.168.200.1                        | 192.168.200.1 | 192.168.200.1 |
-| INVERTER_PORT        | Inverter Modbus TCP port, usually 502, or 6607 on newer firmwares | 6607          | 6607          |
-| ACCEPTED_API_KEYS    | Comma separated list of one or more API keys for authorization    | secretApiKey  |               |
-| LOG_LEVEL            | Log level                                                         | DEBUG         | INFO          |
+| Environment Variable | Description                                                       | Example                          | Default Value |
+|----------------------|-------------------------------------------------------------------|----------------------------------|---------------|
+| INVERTER_HOST        | Inverter IP address, usually 192.168.200.1                        | 192.168.200.1                    | 192.168.200.1 |
+| INVERTER_PORT        | Inverter Modbus TCP port, usually 502, or 6607 on newer firmwares | 6607                             | 6607          |
+| ACCEPTED_API_KEYS    | Comma separated list of one or more API keys for authorization    | secretApiKey,anotherSecretApiKey |               |
+| LOG_LEVEL            | Log level                                                         | DEBUG                            | INFO          |
+| UWSGI_WORKERS        | Set amount of workers/processes                                   | 5                                | 5             |
 
 ## Find Me
 
