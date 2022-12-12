@@ -16,7 +16,8 @@ RESTful interface for reading Huawei Sun2000 inverter metrics.
 ### Basic configuration
 
 ```shell
-docker run -d --name sun2000-rest --network host \
+docker run -d --name sun2000-rest \
+-p 5000:5000 \
 -e ACCEPTED_API_KEYS=secretApiKey \
 olivergregorius/sun2000-rest:latest
 ```
