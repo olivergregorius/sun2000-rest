@@ -60,3 +60,8 @@ def handle_bad_request(error) -> Response:
     response = jsonify({'message': error.description})
     response.status_code = error.code
     return response
+
+
+@bp.get('/health')
+def get_health() -> Response:
+    return Response(status=204)

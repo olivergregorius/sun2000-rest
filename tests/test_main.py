@@ -261,6 +261,11 @@ class MainTest(unittest.TestCase):
         self.assertEqual(200, response.status_code)
         self.assertEqual(expected_response_json, response.get_json())
 
+    def test_calling_GET_health_returns_204(self) -> None:
+        response = self.client.get('/health')
+
+        self.assertEqual(204, response.status_code)
+
 
 class ConnectionFailTest(unittest.TestCase):
 
