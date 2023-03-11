@@ -17,8 +17,8 @@ class MainTest(unittest.TestCase):
     )
     def setUp(self) -> None:
         test_config = {
-            'INVERTER_HOST': '192.168.50.1',
-            'INVERTER_PORT': 6607,
+            'INVERTER_HOST': '1.2.3.4',
+            'INVERTER_PORT': 502,
             'ACCEPTED_API_KEYS': '12345,98765',
             'LOG_LEVEL': 'DEBUG'
         }
@@ -309,8 +309,8 @@ class ConnectionFailTest(unittest.TestCase):
     )
     def test_connection_to_inverter_fails_application_exits(self) -> None:
         test_config = {
-            'INVERTER_HOST': '192.168.50.1',
-            'INVERTER_PORT': 6607,
+            'INVERTER_HOST': '1.2.3.4',
+            'INVERTER_PORT': 502,
             'ACCEPTED_API_KEYS': '12345,98765',
             'LOG_LEVEL': 'DEBUG'
         }
