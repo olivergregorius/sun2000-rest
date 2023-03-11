@@ -12,10 +12,13 @@ class MainTest(unittest.TestCase):
     @patch(
         'sun2000_modbus.inverter.Sun2000.connect', sun2000mock.connect_success
     )
+    @patch(
+        'sun2000_modbus.inverter.Sun2000.isConnected', sun2000mock.connect_success
+    )
     def setUp(self) -> None:
         test_config = {
-            'INVERTER_HOST': '192.168.200.1',
-            'INVERTER_PORT': 6607,
+            'INVERTER_HOST': '1.2.3.4',
+            'INVERTER_PORT': 502,
             'ACCEPTED_API_KEYS': '12345,98765',
             'LOG_LEVEL': 'DEBUG'
         }
@@ -28,7 +31,7 @@ class MainTest(unittest.TestCase):
         self.assertEqual(401, response.status_code)
         self.assertEqual({'message': 'No or invalid API-key provided'}, response.get_json())
 
-    def test_any_api_key_is_valid(self) -> None:
+    def test_any_defined_api_key_is_valid(self) -> None:
         # Testing first API Key 12345
         response = self.client.get('/registers', query_string={'equipment': 'inverter'}, headers={'x-api-key': '12345'})
 
@@ -153,6 +156,12 @@ class MainTest(unittest.TestCase):
         self.assertEqual({'message': 'At least one invalid register passed'}, response.get_json())
 
     @patch(
+        'sun2000_modbus.inverter.Sun2000.connect', sun2000mock.connect_success
+    )
+    @patch(
+        'sun2000_modbus.inverter.Sun2000.isConnected', sun2000mock.connect_success
+    )
+    @patch(
         'sun2000_modbus.inverter.Sun2000.read_raw_value', sun2000mock.mock_read_raw_value
     )
     def test_calling_POST_registervalues_for_inverter_equipment_returns_requested_register_values(self) -> None:
@@ -171,9 +180,9 @@ class MainTest(unittest.TestCase):
                 {
                     'name': 'RatedPower',
                     'type': 'number',
-                    'unit': 'kW',
+                    'unit': 'W',
                     'value': '10000',
-                    'gain': 1000
+                    'gain': 1
                 },
                 {
                     'name': 'State1',
@@ -198,6 +207,12 @@ class MainTest(unittest.TestCase):
         self.assertEqual(200, response.status_code)
         self.assertEqual(expected_response_json, response.get_json())
 
+    @patch(
+        'sun2000_modbus.inverter.Sun2000.connect', sun2000mock.connect_success
+    )
+    @patch(
+        'sun2000_modbus.inverter.Sun2000.isConnected', sun2000mock.connect_success
+    )
     @patch(
         'sun2000_modbus.inverter.Sun2000.read_raw_value', sun2000mock.mock_read_raw_value
     )
@@ -230,6 +245,12 @@ class MainTest(unittest.TestCase):
         self.assertEqual(expected_response_json, response.get_json())
 
     @patch(
+        'sun2000_modbus.inverter.Sun2000.connect', sun2000mock.connect_success
+    )
+    @patch(
+        'sun2000_modbus.inverter.Sun2000.isConnected', sun2000mock.connect_success
+    )
+    @patch(
         'sun2000_modbus.inverter.Sun2000.read_raw_value', sun2000mock.mock_read_raw_value
     )
     def test_calling_POST_registervalues_for_meter_equipment_returns_requested_register_values(self) -> None:
@@ -261,6 +282,20 @@ class MainTest(unittest.TestCase):
         self.assertEqual(200, response.status_code)
         self.assertEqual(expected_response_json, response.get_json())
 
+    @patch(
+        'sun2000_modbus.inverter.Sun2000.connect', sun2000mock.connect_fail
+    )
+    @patch(
+        'sun2000_modbus.inverter.Sun2000.isConnected', sun2000mock.connect_fail
+    )
+    def test_calling_POST_registervalues_when_inverter_connection_fails_returns_502(self) -> None:
+        registers = ['Model']
+        response = self.client.post('/register-values', data=json.dumps({'equipment': 'inverter', 'registers': registers}), content_type='application/json',
+                                    headers={'x-api-key': '12345'})
+
+        self.assertEqual(502, response.status_code)
+        self.assertEqual({'message': 'Connection to inverter could not be established'}, response.get_json())
+
     def test_calling_GET_health_returns_204(self) -> None:
         response = self.client.get('/health')
 
@@ -274,8 +309,8 @@ class ConnectionFailTest(unittest.TestCase):
     )
     def test_connection_to_inverter_fails_application_exits(self) -> None:
         test_config = {
-            'INVERTER_HOST': '192.168.200.1',
-            'INVERTER_PORT': 6607,
+            'INVERTER_HOST': '1.2.3.4',
+            'INVERTER_PORT': 502,
             'ACCEPTED_API_KEYS': '12345,98765',
             'LOG_LEVEL': 'DEBUG'
         }

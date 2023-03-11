@@ -35,6 +35,8 @@ paths:
               examples:
                 No Equipment Error:
                   $ref: '#/components/examples/NoEquipmentError'
+                Invalid Equipment Error:
+                  $ref: '#/components/examples/InvalidEquipmentError'
         401:
           description: Unauthorized
           content:
@@ -62,6 +64,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
               examples:
+                No Equipment Error:
+                  $ref: '#/components/examples/NoEquipmentError'
+                Invalid Equipment Error:
+                  $ref: '#/components/examples/InvalidEquipmentError'
+                No Register Error:
+                  $ref: '#/components/examples/NoRegistersError'
                 Invalid Register Error:
                   $ref: '#/components/examples/InvalidRegisterError'
         401:
@@ -73,6 +81,15 @@ paths:
               examples:
                 Unauthorized:
                   $ref: '#/components/examples/UnauthorizedError'
+        502:
+          description: Bad Gateway
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Inverter Connection Error:
+                  $ref: '#/components/examples/InverterConnectionError'
 components:
   securitySchemes:
     ApiKeyAuth:
@@ -316,6 +333,10 @@ components:
       description: Invalid value for equipment given
       value:
         message: Invalid value for equipment
+    NoRegistersError:
+      description: No registers given
+      value:
+        message: No value for registers
     InvalidRegisterError:
       description: Invalid register name given
       value:
@@ -324,3 +345,7 @@ components:
       description: Unauthorized access
       value:
         message: No or invalid API-key provided
+    InverterConnectionError:
+      description: Error connecting to inverter
+      value:
+        message: Connection to inverter could not be established

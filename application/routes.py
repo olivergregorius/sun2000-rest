@@ -45,11 +45,8 @@ def post_register_values() -> Response:
     register_names = request.get_json()['registers']
     registers = utilities.validate_registers(equipment, register_names)
 
-    register_data = []
-    for register in registers:
-        register_data.append(utilities.get_register_data(register))
-
-    response = {'equipment': equipment.value, 'registers': register_data}
+    registers_data = utilities.get_registers_data(registers)
+    response = {'equipment': equipment.value, 'registers': registers_data}
 
     return jsonify(response)
 

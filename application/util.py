@@ -33,11 +33,15 @@ class Util:
         self.logger.info(f'Log level set to {self.config[ENV_LOG_LEVEL]}')
 
         self.sun2000 = inverter.Sun2000(self.config[ENV_INVERTER_HOST], self.config[ENV_INVERTER_PORT])
-        self.sun2000.connect()
-        if not self.sun2000.connected:
-            exit('Connection to inverter could not be established')
+        self.check_inverter_connection()
 
         self.logger.info('Ready to accept requests')
+
+    def check_inverter_connection(self) -> None:
+        self.sun2000.connect()
+        if not self.sun2000.isConnected():
+            exit('Connection to inverter could not be established')
+        self.sun2000.disconnect()
 
     def validate_auth_header(self) -> None:
         api_key = request.headers.get('x-api-key')
@@ -73,6 +77,19 @@ class Util:
             registers.append(register_members.__getitem__(register_name))
 
         return registers
+
+    def get_registers_data(self, registers: List[Union[InverterEquipmentRegister, BatteryEquipmentRegister, MeterEquipmentRegister]]) -> List[dict]:
+        self.sun2000.connect()
+        if not self.sun2000.isConnected():
+            abort(502, 'Connection to inverter could not be established')
+
+        registers_data = []
+        for register in registers:
+            registers_data.append(self.get_register_data(register))
+
+        self.sun2000.disconnect()
+
+        return registers_data
 
     def get_register_data(self, register: Union[InverterEquipmentRegister, BatteryEquipmentRegister, MeterEquipmentRegister]) -> dict:
         self.logger.debug(f'Reading data for register {register.name}')
