@@ -2,11 +2,11 @@ from sun2000_modbus.registers import InverterEquipmentRegister, BatteryEquipment
 
 
 def connect_success(self):
-    self.connected = True
+    return True
 
 
 def connect_fail(self):
-    self.connected = False
+    return False
 
 
 MockedRawResponses = {
