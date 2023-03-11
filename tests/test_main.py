@@ -10,14 +10,14 @@ from application import create_app
 class MainTest(unittest.TestCase):
 
     @patch(
-        'pymodbus.client.sync.ModbusTcpClient.connect', sun2000mock.connect_success
+        'sun2000_modbus.inverter.Sun2000.connect', sun2000mock.connect_success
     )
     @patch(
-        'pymodbus.client.sync.ModbusTcpClient.is_socket_open', sun2000mock.connect_success
+        'sun2000_modbus.inverter.Sun2000.isConnected', sun2000mock.connect_success
     )
     def setUp(self) -> None:
         test_config = {
-            'INVERTER_HOST': '192.168.200.1',
+            'INVERTER_HOST': '192.168.50.1',
             'INVERTER_PORT': 6607,
             'ACCEPTED_API_KEYS': '12345,98765',
             'LOG_LEVEL': 'DEBUG'
@@ -156,6 +156,12 @@ class MainTest(unittest.TestCase):
         self.assertEqual({'message': 'At least one invalid register passed'}, response.get_json())
 
     @patch(
+        'sun2000_modbus.inverter.Sun2000.connect', sun2000mock.connect_success
+    )
+    @patch(
+        'sun2000_modbus.inverter.Sun2000.isConnected', sun2000mock.connect_success
+    )
+    @patch(
         'sun2000_modbus.inverter.Sun2000.read_raw_value', sun2000mock.mock_read_raw_value
     )
     def test_calling_POST_registervalues_for_inverter_equipment_returns_requested_register_values(self) -> None:
@@ -202,6 +208,12 @@ class MainTest(unittest.TestCase):
         self.assertEqual(expected_response_json, response.get_json())
 
     @patch(
+        'sun2000_modbus.inverter.Sun2000.connect', sun2000mock.connect_success
+    )
+    @patch(
+        'sun2000_modbus.inverter.Sun2000.isConnected', sun2000mock.connect_success
+    )
+    @patch(
         'sun2000_modbus.inverter.Sun2000.read_raw_value', sun2000mock.mock_read_raw_value
     )
     def test_calling_POST_registervalues_for_battery_equipment_returns_requested_register_values(self) -> None:
@@ -232,6 +244,12 @@ class MainTest(unittest.TestCase):
         self.assertEqual(200, response.status_code)
         self.assertEqual(expected_response_json, response.get_json())
 
+    @patch(
+        'sun2000_modbus.inverter.Sun2000.connect', sun2000mock.connect_success
+    )
+    @patch(
+        'sun2000_modbus.inverter.Sun2000.isConnected', sun2000mock.connect_success
+    )
     @patch(
         'sun2000_modbus.inverter.Sun2000.read_raw_value', sun2000mock.mock_read_raw_value
     )
@@ -267,6 +285,9 @@ class MainTest(unittest.TestCase):
     @patch(
         'sun2000_modbus.inverter.Sun2000.connect', sun2000mock.connect_fail
     )
+    @patch(
+        'sun2000_modbus.inverter.Sun2000.isConnected', sun2000mock.connect_fail
+    )
     def test_calling_POST_registervalues_when_inverter_connection_fails_returns_502(self) -> None:
         registers = ['Model']
         response = self.client.post('/register-values', data=json.dumps({'equipment': 'inverter', 'registers': registers}), content_type='application/json',
@@ -288,7 +309,7 @@ class ConnectionFailTest(unittest.TestCase):
     )
     def test_connection_to_inverter_fails_application_exits(self) -> None:
         test_config = {
-            'INVERTER_HOST': '192.168.200.1',
+            'INVERTER_HOST': '192.168.50.1',
             'INVERTER_PORT': 6607,
             'ACCEPTED_API_KEYS': '12345,98765',
             'LOG_LEVEL': 'DEBUG'
